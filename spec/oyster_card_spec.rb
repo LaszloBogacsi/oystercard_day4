@@ -30,6 +30,7 @@ describe OysterCard do
     it "Touching out should deduct correct amount from card" do
       oystercard.top_up(described_class::MINIMUM_BALANCE+1)
       oystercard.touch_in(station)
+      puts journey_log.current_journey.log
       expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-Journey::MINIMUM_FARE)
     end
 
@@ -58,7 +59,7 @@ describe OysterCard do
     end
 
     it "Sets current journey to nil" do
-      expect(oystercard.current_journey).to have_attributes(entry_station: nil, exit_station: nil)
+      expect(oystercard.journey_log.current_journey).to have_attributes(entry_station: nil, exit_station: nil)
     end
 
     it "Touching out updates journey log with journey (entry and exit station)" do

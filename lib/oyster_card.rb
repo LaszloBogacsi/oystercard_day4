@@ -24,19 +24,19 @@ class OysterCard
   def touch_in(station)
     finish_journey if double_entry?
     raise "You don't have enough money" if insufficient_funds?
-    current_journey.entry_station = station
+    journey_log.current_journey.entry_station = station
   end
 
   def touch_out(station)
-    current_journey.exit_station = station
+    journey_log.current_journey.exit_station = station
     finish_journey
   end
 
   private
+
   def finish_journey
     deduct(current_journey.fare)
-    update_log(current_journey)
-    reset_current_journey
+    journey_log.finish_journey
   end
 
   def  double_entry?
