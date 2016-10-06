@@ -11,7 +11,6 @@ class OysterCard
 
   def initialize
       @balance = 0
-      @current_journey = Journey.new
       @journey_log = JourneyLog.new
 
   end
@@ -28,6 +27,7 @@ class OysterCard
   end
 
   def touch_out(station)
+    raise "You don't have enough money" if insufficient_funds?
     journey_log.update_exit(station)
     balance_update
   end

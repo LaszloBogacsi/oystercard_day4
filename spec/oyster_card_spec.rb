@@ -36,6 +36,9 @@ describe OysterCard do
     it "Cannot touch_in if balance less than minimum balance" do
       expect{oystercard.touch_in(station)}.to raise_error "You don't have enough money"
     end
+    it "Cannot touch_out if balance less than minimum balance" do
+      expect{oystercard.touch_out(station)}.to raise_error "You don't have enough money"
+    end
 
     it "Touching in sets entry station with station" do
       oystercard.top_up(described_class::MINIMUM_BALANCE)
@@ -68,13 +71,16 @@ describe OysterCard do
   end
 
   context "Touching out without touching in" do
+    before do
+      oystercard.top_up(Journey::PENALTY_FARE + 1)
+    end
     it "Touching out without touching in incurs a penalty charge" do
       expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-Journey::PENALTY_FARE)
     end
 
     it "Touching out without touching in resets current_journey" do
       oystercard.touch_out(station2)
-      expect(oystercard.current_journey).to have_attributes(entry_station: nil, exit_station: nil)
+      expect(oystercard.journey_log.current_journey).to have_attributes(entry_station: nil, exit_station: nil)
     end
 
     it "Touching out updates journey log with journey (entry and exit station)" do
