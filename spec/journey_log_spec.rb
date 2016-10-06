@@ -10,19 +10,21 @@ let (:station2) {double('station2', name: "Holborn", zone: 1)}
 
 let(:journey) {double('journey', entry_station: station, exit_station: station2)}
 
-  it 'initialize with an empty journey log array' do
-    expect(journey_log.log).to eq []
-  end
+  context "Initialization" do
+    it 'initialize with an empty journey log array' do
+      expect(journey_log.log).to eq []
+    end
 
-  it 'initialize with a new journey' do
-    expect(journey_log.current_journey).to be_an_instance_of Journey
-  end
+    it 'initialize with a new journey' do
+      expect(journey_log.current_journey).to be_an_instance_of Journey
+    end
 
-  it 'has to be able to record journeys' do
-    journey_log.log << journey
-    expect(journey_log.log.last).to be journey
+    it 'has to be able to record journeys' do
+      journey_log.log << journey
+      expect(journey_log.log.last).to be journey
+    end
   end
-
+  
   context '#finish_journey' do
     it 'current journey should be recorded in log' do
       journey_log.current_journey = journey

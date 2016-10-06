@@ -30,7 +30,6 @@ describe OysterCard do
     it "Touching out should deduct correct amount from card" do
       oystercard.top_up(described_class::MINIMUM_BALANCE+1)
       oystercard.touch_in(station)
-      #oystercard.journey_log.current_journey
       expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-((station.zone - station2.zone).abs + 1))
     end
 
