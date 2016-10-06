@@ -10,9 +10,10 @@ class OysterCard
 
   def initialize
       @balance = 0
-      @in_journey = false
+    #@in_journey = false
       @current_journey = Journey.new
-      @journey_log = []
+      @journey_log = JourneyLog.new
+
   end
 
   def top_up(amount)
@@ -59,7 +60,7 @@ class OysterCard
   end
 
   def update_log(journey)
-    @journey_log << journey
+    @journey_log.log << journey
   end
 
   def reset_current_journey

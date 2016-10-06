@@ -62,8 +62,8 @@ describe OysterCard do
     end
 
     it "Touching out updates journey log with journey (entry and exit station)" do
-      expect(oystercard.journey_log.last.entry_station).to be station
-      expect(oystercard.journey_log.last.exit_station).to be station2
+      expect(oystercard.journey_log.log.last.entry_station).to be station
+      expect(oystercard.journey_log.log.last.exit_station).to be station2
     end
   end
 
@@ -79,8 +79,8 @@ describe OysterCard do
 
     it "Touching out updates journey log with journey (entry and exit station)" do
       oystercard.touch_out(station2)
-      expect(oystercard.journey_log.last.entry_station).to be nil
-      expect(oystercard.journey_log.last.exit_station).to be station2
+      expect(oystercard.journey_log.log.last.entry_station).to be nil
+      expect(oystercard.journey_log.log.last.exit_station).to be station2
     end
   end
 
