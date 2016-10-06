@@ -30,7 +30,7 @@ describe Journey do
     end
     it "should charge penalty fare when exit station is missing" do
       expect(journey.fare).to eq described_class::PENALTY_FARE
-    end
+    end    
   end
 
 

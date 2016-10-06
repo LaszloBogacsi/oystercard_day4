@@ -35,13 +35,11 @@ let(:journey) {double('journey', entry_station: station, exit_station: station2)
       journey_log.finish_journey
       expect(journey_log.current_journey).to have_attributes(entry_station: nil, exit_station: nil)
     end
-
-
   end
 
-
-
-
-
-
+  context "#fare" do
+    it "fare method should reflect penality fare for incomplete journey" do
+      expect(journey_log.fare).to eq Journey::PENALTY_FARE
+    end
+  end
 end

@@ -21,8 +21,8 @@ describe OysterCard do
       expect(oystercard.balance).to eq(10)
     end
 
-    it "prevents top up above 90" do
-      expect{oystercard.top_up(described_class::MAX_LIMIT+1)}.to raise_error("The maximum amount allowed on the card is £90")
+    it "prevents top up above #{described_class::MAX_LIMIT}" do
+      expect{oystercard.top_up(described_class::MAX_LIMIT+1)}.to raise_error("The maximum amount allowed on the card is £#{described_class::MAX_LIMIT}")
     end
   end
 
@@ -30,7 +30,7 @@ describe OysterCard do
     it "Touching out should deduct correct amount from card" do
       oystercard.top_up(described_class::MINIMUM_BALANCE+1)
       oystercard.touch_in(station)
-      puts journey_log.current_journey.log
+      oystercard.journey_log.current_journey
       expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-Journey::MINIMUM_FARE)
     end
 
@@ -41,13 +41,13 @@ describe OysterCard do
     it "Touching in sets entry station with station" do
       oystercard.top_up(described_class::MINIMUM_BALANCE)
       oystercard.touch_in(station)
-      expect(oystercard.current_journey.entry_station).to be station
+      expect(oystercard.journey_log.current_journey.entry_station).to be station
     end
 
     it "Saves the entry station when touching in" do
       oystercard.top_up(described_class::MINIMUM_BALANCE)
       oystercard.touch_in(station)
-      expect(oystercard.current_journey.entry_station).to be station
+      expect(oystercard.journey_log.current_journey.entry_station).to be station
     end
   end
 
