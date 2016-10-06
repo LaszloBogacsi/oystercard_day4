@@ -3,8 +3,8 @@ require "oyster_card"
 
 describe OysterCard do
   subject(:oystercard) {described_class.new}
-  let (:station) {double('station', name: "King's Cross")}
-  let (:station2) {double('station2', name: "Holborn")}
+  let (:station) {double('station', name: "King's Cross", zone: 1)}
+  let (:station2) {double('station2', name: "Holborn", zone: 2)}
   let (:journey) {double :journey }
 
   it "has a default balance of 0" do
@@ -30,8 +30,8 @@ describe OysterCard do
     it "Touching out should deduct correct amount from card" do
       oystercard.top_up(described_class::MINIMUM_BALANCE+1)
       oystercard.touch_in(station)
-      oystercard.journey_log.current_journey
-      expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-Journey::MINIMUM_FARE)
+      #oystercard.journey_log.current_journey
+      expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-((station.zone - station2.zone).abs + 1))
     end
 
     it "Cannot touch_in if balance less than minimum balance" do
